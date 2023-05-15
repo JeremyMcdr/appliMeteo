@@ -6,7 +6,7 @@
 
 <ion-content>
   <ion-item>
-    <ion-label>Sélectionnez une date et une heure</ion-label>
+    <ion-label>Sélectionnez une date</ion-label>
     <ion-select [(ngModel)]="selectedDay" (ionChange)="onDayChange()">
       <ion-select-option *ngFor="let day of availableDays" [value]="day">
         {{ day }}
@@ -19,9 +19,9 @@
     <ion-card *ngFor="let forecast of displayedForecast">
       <ion-card-header>
         <ion-card-subtitle>
-          <img src="http://openweathermap.org/img/w/{{ forecast.weather[0].icon }}.png" alt="Weather icon">
+          <img src="http://openweathermap.org/img/w/{{ forecast.weather[0].icon }}.png" alt="Weather icon" class="weather-icon">
         </ion-card-subtitle>
-        <ion-card-title>{{ forecast.formattedDate }}</ion-card-title>
+        <ion-card-title>{{ forecast.formattedDate }} à {{ forecast.formattedTime }}</ion-card-title>
       </ion-card-header>
       <ion-card-content>
         <p>Température : {{ forecast.main.temp }}°C</p>

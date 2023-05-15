@@ -26,38 +26,60 @@ export class ForecastPage implements OnInit {
 
   getForecast() {
     this.weatherService.getForecast(this.cityName).subscribe(forecast => {
+      forecast.list.forEach(item => {
+        const date = new Date(item.dt_txt);
+        item.formattedDate = this.getFormattedDate(date);
+        item.formattedTime = this.getFormattedTime(date);
+      });
       this.forecast = forecast;
       this.availableDays = this.getAvailableDays();
-      this.onDayChange();
+      this.displayedForecast = this.filterForecastBySelectedDay();
     });
   }
 
+
   onDayChange() {
     this.displayedForecast = this.filterForecastBySelectedDay();
-    this.displayedForecast.forEach(item => {
-      item.formattedDate = this.getFormattedDate(new Date(item.dt_txt));
-    });
   }
+
 
   filterForecastBySelectedDay(): any[] {
     if (this.selectedDay === 'all') {
       return this.forecast.list;
     } else {
-      return this.forecast.list.filter(day => this.getFormattedDate(new Date(day.dt_txt)) === this.selectedDay);
+      return this.forecast.list.filter(item => this.getFormattedDay(new Date(item.dt_txt)) === this.selectedDay);
     }
   }
 
+
+
+
+
+  getFormattedTime(dateTime: Date): string {
+    const options = { hour: 'numeric', minute: 'numeric', hour12: false };
+    return dateTime.toLocaleTimeString('fr-FR', options);
+  }
+
+  getFormattedDay(date: Date): string {
+    const options = { weekday: 'long' };
+    return date.toLocaleDateString('fr-FR', options);
+  }
+
+
   getAvailableDays(): string[] {
-    const availableDays: string[] = ['all'];
+    const availableDays = [];
     for (const item of this.forecast.list) {
       const date = new Date(item.dt_txt);
-      const formattedDate = this.getFormattedDate(date);
+      const formattedDate = this.getFormattedDay(date);
       if (!availableDays.includes(formattedDate)) {
         availableDays.push(formattedDate);
       }
     }
     return availableDays;
   }
+
+
+
 
   getFormattedDate(date: Date): string {
     const options = { weekday: 'long', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' };
@@ -68,5 +90,7 @@ export class ForecastPage implements OnInit {
     this.selectedDay = day;
     this.onDayChange();
   }
+
+
 
 }
