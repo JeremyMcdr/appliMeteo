@@ -36,6 +36,15 @@ const routes: Routes = [
         ]
       },
       {
+        path: 'forecast',
+        children: [
+          {
+            path: '',
+            loadChildren: '../forecast/forecast.module#ForecastPageModule'
+          }
+        ]
+      },
+      {
         path: '',
         redirectTo: '/tabs/tab1',
         pathMatch: 'full'

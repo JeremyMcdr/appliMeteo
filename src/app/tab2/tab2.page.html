@@ -1,23 +1,102 @@
+
 <ion-header>
-  <ion-toolbar>
-    <ion-title>
-      Photo Gallery
-    </ion-title>
-  </ion-toolbar>
+    <ion-toolbar>
+        <ion-title>
+            Test du pipe date
+        </ion-title>
+
+    </ion-toolbar>
+
 </ion-header>
 
 <ion-content>
-  <ion-grid>
-    <ion-row>
-    <ion-col col-6 *ngFor="let photo of photoService.photos">
-        <img [src]="photo.data" />
-        </ion-col>
-    </ion-row>
-  </ion-grid>
-  
-  <ion-fab vertical="bottom" horizontal="center" slot="fixed">
-      <ion-fab-button (click)="photoService.takePicture()">
-        <ion-icon name="camera"></ion-icon>
-      </ion-fab-button>
-  </ion-fab>
+    <ion-card>
+        <ion-card-header>
+            <ion-card-title>
+                Formatage de la date
+            </ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+            <p>Nous sommes le {{today | date }}</p>
+            <p>Ou si tu prefères {{today | date:'fullDate':'':'fr'}}</p>
+            <p>Il est  {{today | date:'H:mm z':'':'fr'}}</p>
+        </ion-card-content>
+    </ion-card>
+    <ion-card>
+        <ion-card-header>
+            <ion-card-title>
+                Formatage des nombres
+            </ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+            <div>
+                <p>
+                    No specified formatting:
+                    {{pi | number}}
+                    <!--output: '3.142'-->
+                </p>
+                <p>
+                    With digitsInfo parameter specified:
+                    {{pi | number:'4.1-5'}}
+                    <!--output: '0,003.14159'-->
+                </p>
+                <p>
+                    With digitsInfo and
+                    locale parameters specified:
+                    {{pi | number:'4.1-5':'fr'}}
+                    <!--output: '0 003,14159'-->
+                </p>
+            </div>
+        </ion-card-content>
+    </ion-card>
+    <ion-card>
+        <ion-card-header>
+            <ion-card-title>
+                Formatage des pourcents
+            </ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+            <div>
+                <!--output '26%'-->
+                <p>A: {{a | percent}}</p>
+
+                <!--output '0,134.950%'-->
+                <p>B: {{b | percent:'4.3-5'}}</p>
+
+                <!--output '0 134,950 %'-->
+                <p>B: {{b | percent:'4.3-5':'fr'}}</p>
+            </div>
+        </ion-card-content>
+    </ion-card>
+    <ion-card>
+        <ion-card-header>
+            <ion-card-title>
+                Attribution en currency
+            </ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+            <div>
+                <!--output '$0.26'-->
+                <p>A: {{c | currency}}</p>
+
+                <!--output 'CA$0.26'-->
+                <p>A: {{c | currency:'EUR'}}</p>
+
+                <!--output 'CAD0.26'-->
+                <p>A: {{c | currency:'EUR':'code'}}</p>
+
+                <!--output 'CA$0,001.35'-->
+                <p>B: {{d | currency:'EUR':'symbol':'4.2-2'}}</p>
+
+                <!--output '$0,001.35'-->
+                <p>B: {{d | currency:'EUR':'symbol-narrow':'4.2-2'}}</p>
+
+                <!--output '0 001,35 CA$'-->
+                <p>B: {{d | currency:'EUR':'symbol':'4.2-2':'fr'}}</p>
+
+                <!--output 'CLP1' because CLP has no cents-->
+                <p>B: {{d | currency:'EUR'}}</p>
+            </div>
+        </ion-card-content>
+    </ion-card>
 </ion-content>

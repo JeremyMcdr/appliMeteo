@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Prévisions météorologiques pour {{ cityName }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item>
+    <ion-label>Sélectionnez une date et une heure</ion-label>
+    <ion-select [(ngModel)]="selectedDay" (ionChange)="onDayChange()">
+      <ion-select-option *ngFor="let day of availableDays" [value]="day">
+        {{ day }}
+      </ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-list>
+    <ion-list-header>Prévisions pour {{ selectedDay }}</ion-list-header>
+    <ion-card *ngFor="let forecast of displayedForecast">
+      <ion-card-header>
+        <ion-card-subtitle>
+          <img src="http://openweathermap.org/img/w/{{ forecast.weather[0].icon }}.png" alt="Weather icon">
+        </ion-card-subtitle>
+        <ion-card-title>{{ forecast.formattedDate }}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>Température : {{ forecast.main.temp }}°C</p>
+        <p>Température ressentie : {{ forecast.main.feels_like }}°C</p>
+        <p>Humidité : {{ forecast.main.humidity }}%</p>
+        <p>Vitesse du vent : {{ forecast.wind.speed }} m/s</p>
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
+</ion-content>
